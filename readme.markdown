@@ -1,27 +1,30 @@
-Proto.js
+CloneIt.js
 ============
 
 A minimal utility for creating objects with an inheritance chain
 
-	var Car = Proto.create({
-		maxSpeed:100,
-		admire:function(){
-			return 'Nice Car!';
+	// create an object
+
+	var Shape = CloneIt.clone({
+		sides 0,
+		hasArea: true
+	});
+
+	var Rectangle = Shape.clone({
+		sides: 4,
+		// init function is called when using 'create'
+		init: function(x, y){
+			this.x = x;
+			this.y = y;
 		},
-		getSpecs:function(){
-			return "Max speed is " + this.maxSpeed;
+		area: function () {
+			return this.x * this.y;
 		}
 	});
 
-	var ferrari = Car.create({
-		maxSpeed:250,
-		admire:function(){
-			return 'Wow, ' + this.parent.admire();
-		}
-	});
+	// create an 'instance' using 'create'
+	// this call the `init` method
+	var rect1 = Rectangle.create(3, 4);
 
-	ferrari.getSpecs();
-	//Max speed is 250;
-
-	ferrari.admire();
-	// Wow, Nice Car!
+	rect1.area(); //=> 12
+	rect1.hasArea; //=> true (call forwarded to parent object)
